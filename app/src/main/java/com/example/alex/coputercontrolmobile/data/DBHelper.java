@@ -13,8 +13,8 @@ import java.io.IOException;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-	private static final String DATABAASE_NAME = "DB v.2.db";
-	public static final int DATABASE_VERSION = 4;
+	private static final String DATABAASE_NAME = "DBtest.db";
+	public static final int DATABASE_VERSION = 2;
 	private Context mContext;
 	private XMLParser mParser = new XMLParser();
 	private String LOG_TAG = "myLogs";
@@ -45,7 +45,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	}
 
 	@Override
-	public void onUpgrade(SQLiteDatabase sqLiteDatabase, int v, int v1) {
+	public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 		mParser.getmQueryList().clear();
 		try {
 			mParser.onUpdateParse(mContext);
@@ -56,10 +56,10 @@ public class DBHelper extends SQLiteOpenHelper {
 		}
 		if (!mParser.getmQueryList().isEmpty()) {
 			int listsize = mParser.getmQueryList().size();
-			for (int i = 0; i < listsize; i++) {
-				if (mParser.getmQueryList().get(i).length() > 10) {
-					sqLiteDatabase.execSQL(mParser.getmQueryList().get(i));
-					Log.d(LOG_TAG, "onUpgrade: " + mParser.getmQueryList().size() + mParser.getmQueryList().get(i));
+			for (int c = 0; c < listsize; c++) {
+				if (mParser.getmQueryList().get(c).length() > 10) {
+					sqLiteDatabase.execSQL(mParser.getmQueryList().get(c));
+					Log.d(LOG_TAG, "onUpgrade: " + mParser.getmQueryList().size() + mParser.getmQueryList().get(c));
 				}
 			}
 		} else {

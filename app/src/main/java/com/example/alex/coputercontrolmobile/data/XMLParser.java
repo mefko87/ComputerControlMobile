@@ -2,7 +2,6 @@ package com.example.alex.coputercontrolmobile.data;
 
 
 import android.content.Context;
-import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -45,8 +44,7 @@ public class XMLParser {
 				}
 			} else if (eventType == XmlPullParser.TEXT) {
 				if ("query".equals(currentTag)) {
-					if (Integer.parseInt(curentUserVersion) > DBHelper.DATABASE_VERSION) {
-						Log.d(LOG_TAG, xpp.getText());
+					if (Integer.parseInt(curentUserVersion) >= DBHelper.DATABASE_VERSION) {
 						mQueryList.add(xpp.getText());
 					}
 				}
@@ -70,7 +68,7 @@ public class XMLParser {
 				currentTag = xpp.getName();
 			} else if (eventType == XmlPullParser.TEXT) {
 				if ("query".equals(currentTag)) {
-					Log.d(LOG_TAG, xpp.getText());
+
 					mQueryList.add(xpp.getText());
 				}
 			}

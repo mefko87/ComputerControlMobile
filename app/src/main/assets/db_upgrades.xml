@@ -1,36 +1,39 @@
 <db>
-    <query version="1">CREATE TABLE tblPcProfiles (
+    <query version="1">
+        CREATE TABLE tblPcProfiles (
         _ID INTEGER PRIMARY KEY AUTOINCREMENT,
         PcName TEXT NOT NULL,
         PcIP TEXT NOT NULL
         );
 
     </query>
-
-
-    <query version="1">CREATE TABLE tblHotkeyProfiles (
+    <query version="1">
+        CREATE TABLE tblHotkeyProfiles (
         _ID INTEGER PRIMARY KEY AUTOINCREMENT,
         HotkeyName TEXT NOT NULL,
         HotkeyCombination TEXT NOT NULL,
         HotkeyGroup TEXT NOT NULL,
         HotkeyPriority INTEGER NOT NULL
         );
-
     </query>
-
-    <query version="2">CREATE TABLE sqlitestudio_temp_table AS SELECT *
+    <query version="2">
+        CREATE TABLE sqlitestudio_temp_table AS SELECT *
         FROM tblPcProfiles;
 
-        DROP TABLE tblPcProfiles;
 
-        CREATE TABLE tblPcProfiles (
+    </query>
+    <query version="2">DROP TABLE tblPcProfiles;
+
+
+    </query>
+    <query version="2">CREATE TABLE tblPcProfiles (
         _ID INTEGER PRIMARY KEY AUTOINCREMENT,
         PcName TEXT NOT NULL,
         PcIP TEXT NOT NULL,
-        test TEXT
+        test TEXT NOT NULL
         );
-
-        INSERT INTO tblPcProfiles (
+    </query>
+    <query version="2">INSERT INTO tblPcProfiles (
         _ID,
         PcName,
         PcIP
@@ -39,9 +42,7 @@
         PcName,
         PcIP
         FROM sqlitestudio_temp_table;
-
-        DROP TABLE sqlitestudio_temp_table;
-
     </query>
+    <query version="2">DROP TABLE sqlitestudio_temp_table;</query>
 </db>
 
