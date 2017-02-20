@@ -1,48 +1,51 @@
-<db>
-    <query version="1">
-        CREATE TABLE tblPcProfiles (
-        _ID INTEGER PRIMARY KEY AUTOINCREMENT,
-        PcName TEXT NOT NULL,
-        PcIP TEXT NOT NULL
-        );
+<db_update>>
+    <db version="1">
+        <query>
+            CREATE TABLE tblPcProfiles (
+            _ID INTEGER PRIMARY KEY AUTOINCREMENT,
+            PcName TEXT NOT NULL,
+            PcIP TEXT NOT NULL
+            );
+        </query>
+        <query version="1">
+            CREATE TABLE tblHotkeyProfiles (
+            _ID INTEGER PRIMARY KEY AUTOINCREMENT,
+            HotkeyName TEXT NOT NULL,
+            HotkeyCombination TEXT NOT NULL,
+            HotkeyGroup TEXT NOT NULL,
+            HotkeyPriority INTEGER NOT NULL
+            );
+        </query>
+    </db>
+    <db version="2">
+        <query>
+            CREATE TABLE sqlitestudio_temp_table AS SELECT *
+            FROM tblPcProfiles;
+        </query>
+        <query>DROP TABLE tblPcProfiles;
+        </query>
+    </db>
 
-    </query>
-    <query version="1">
-        CREATE TABLE tblHotkeyProfiles (
-        _ID INTEGER PRIMARY KEY AUTOINCREMENT,
-        HotkeyName TEXT NOT NULL,
-        HotkeyCombination TEXT NOT NULL,
-        HotkeyGroup TEXT NOT NULL,
-        HotkeyPriority INTEGER NOT NULL
-        );
-    </query>
-    <query version="2">
-        CREATE TABLE sqlitestudio_temp_table AS SELECT *
-        FROM tblPcProfiles;
-
-
-    </query>
-    <query version="2">DROP TABLE tblPcProfiles;
-
-
-    </query>
-    <query version="2">CREATE TABLE tblPcProfiles (
-        _ID INTEGER PRIMARY KEY AUTOINCREMENT,
-        PcName TEXT NOT NULL,
-        PcIP TEXT NOT NULL,
-        test TEXT NOT NULL
-        );
-    </query>
-    <query version="2">INSERT INTO tblPcProfiles (
-        _ID,
-        PcName,
-        PcIP
-        )
-        SELECT _ID,
-        PcName,
-        PcIP
-        FROM sqlitestudio_temp_table;
-    </query>
-    <query version="2">DROP TABLE sqlitestudio_temp_table;</query>
-</db>
-
+    <db version="3">
+        <query>CREATE TABLE tblPcProfiles (
+            _ID INTEGER PRIMARY KEY AUTOINCREMENT,
+            PcName TEXT NOT NULL,
+            PcIP TEXT NOT NULL,
+            test TEXT NOT NULL
+            );
+        </query>
+    </db>
+    <db version="4">
+        <query>INSERT INTO tblPcProfiles (
+            _ID,
+            PcName,
+            PcIP
+            )
+            SELECT _ID,
+            PcName,
+            PcIP
+            FROM sqlitestudio_temp_table;
+        </query>
+        <query>DROP TABLE sqlitestudio_temp_table;</query>
+    </db>
+</db_update>

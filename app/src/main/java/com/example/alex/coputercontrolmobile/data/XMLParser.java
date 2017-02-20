@@ -2,6 +2,7 @@ package com.example.alex.coputercontrolmobile.data;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class XMLParser {
+	private boolean mShowLogs = true;
 	private String LOG_TAG = "myLogs";
 	private List<String> mQueryList = new ArrayList<String>();
 
@@ -20,7 +22,7 @@ public class XMLParser {
 
 	}
 
-	public List<String> getmQueryList() {
+	public List<String> getQueryList() {
 		return mQueryList;
 	}
 
@@ -31,26 +33,30 @@ public class XMLParser {
 		XmlPullParser xpp = factory.newPullParser();
 		InputStream raw = context.getApplicationContext().getAssets().open("db_upgrades.xml");
 		xpp.setInput(raw, null);
-
 		int eventType = xpp.getEventType();
 		String currentTag = null;
-		String curentUserVersion = null;
+		String currentUserVersion = null;
+		String tagToParse = "query";
 		while (eventType != XmlPullParser.END_DOCUMENT) {
-
 			if (eventType == XmlPullParser.START_TAG) {
 				currentTag = xpp.getName();
+
 				if (xpp.getAttributeCount() != 0) {
-					curentUserVersion = xpp.getAttributeValue(0);
+					if (xpp.getAttributeName(0).equals("version")) {
+						currentUserVersion = xpp.getAttributeValue(0);
+					}
 				}
 			} else if (eventType == XmlPullParser.TEXT) {
-				if ("query".equals(currentTag)) {
-					if (Integer.parseInt(curentUserVersion) >= DBHelper.DATABASE_VERSION) {
+				if (currentTag.equals(tagToParse) && Integer.parseInt(currentUserVersion) >= DBHelper.DATABASE_VERSION) {
+					if (xpp.getText().length() > 8) {
+						if (mShowLogs) {
+							Log.d(LOG_TAG, "Parse from " + currentTag + ": " + xpp.getText());
+						}
 						mQueryList.add(xpp.getText());
 					}
 				}
 			}
 			eventType = xpp.next();
-
 		}
 	}
 
@@ -62,18 +68,25 @@ public class XMLParser {
 		xpp.setInput(raw, null);
 		int eventType = xpp.getEventType();
 		String currentTag = null;
+		String tagToParse = "query";
 
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 			if (eventType == XmlPullParser.START_TAG) {
 				currentTag = xpp.getName();
 			} else if (eventType == XmlPullParser.TEXT) {
-				if ("query".equals(currentTag)) {
-
-					mQueryList.add(xpp.getText());
+				if (currentTag.equals(tagToParse)) {
+					if (xpp.getText().length() > 8) {
+						if (mShowLogs) {
+							Log.d(LOG_TAG, "Parse from " + currentTag + ": " + xpp.getText());
+						}
+						mQueryList.add(xpp.getText());
+					}
 				}
 			}
 			eventType = xpp.next();
 		}
 	}
+
+
 }
 

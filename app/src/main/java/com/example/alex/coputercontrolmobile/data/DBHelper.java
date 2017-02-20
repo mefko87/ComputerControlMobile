@@ -18,6 +18,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	private Context mContext;
 	private XMLParser mParser = new XMLParser();
 	private String LOG_TAG = "myLogs";
+	private boolean mShowLogs = true;
 
 	public DBHelper(Context context) throws IOException, XmlPullParserException {
 		super(context, DATABAASE_NAME, null, DATABASE_VERSION);
@@ -27,7 +28,8 @@ public class DBHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
-		mParser.getmQueryList().clear();
+
+		mParser.getQueryList().clear();
 		try {
 			mParser.onCreateParse(mContext);
 		} catch (XmlPullParserException e) {
@@ -35,18 +37,22 @@ public class DBHelper extends SQLiteOpenHelper {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		int listsize = mParser.getmQueryList().size();
+		int listsize = mParser.getQueryList().size();
 		for (int i = 0; i < listsize; i++) {
-			if (mParser.getmQueryList().get(i).length() > 10) {
-				sqLiteDatabase.execSQL(mParser.getmQueryList().get(i));
-				Log.d(LOG_TAG, "onCreate: " + mParser.getmQueryList().size() + mParser.getmQueryList().get(i));
+			if (mParser.getQueryList().get(i).length() > 10) {
+				sqLiteDatabase.execSQL(mParser.getQueryList().get(i));
+				if (mShowLogs) {
+					Log.d(LOG_TAG, "onCreate: " + mParser.getQueryList().size() + mParser.getQueryList().get(i));
+				}
 			}
 		}
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-		mParser.getmQueryList().clear();
+		mParser.getQueryList().clear();
+
+
 		try {
 			mParser.onUpdateParse(mContext);
 		} catch (XmlPullParserException e) {
@@ -54,12 +60,14 @@ public class DBHelper extends SQLiteOpenHelper {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if (!mParser.getmQueryList().isEmpty()) {
-			int listsize = mParser.getmQueryList().size();
+		if (!mParser.getQueryList().isEmpty()) {
+			int listsize = mParser.getQueryList().size();
 			for (int c = 0; c < listsize; c++) {
-				if (mParser.getmQueryList().get(c).length() > 10) {
-					sqLiteDatabase.execSQL(mParser.getmQueryList().get(c));
-					Log.d(LOG_TAG, "onUpgrade: " + mParser.getmQueryList().size() + mParser.getmQueryList().get(c));
+				if (mParser.getQueryList().get(c).length() > 10) {
+					sqLiteDatabase.execSQL(mParser.getQueryList().get(c));
+					if (mShowLogs) {
+						Log.d(LOG_TAG, "onUpgrade: " + mParser.getQueryList().size() + mParser.getQueryList().get(c));
+					}
 				}
 			}
 		} else {
