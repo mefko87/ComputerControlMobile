@@ -7,7 +7,7 @@
             PcIP TEXT NOT NULL
             );
         </query>
-        <query version="1">
+        <query>
             CREATE TABLE tblHotkeyProfiles (
             _ID INTEGER PRIMARY KEY AUTOINCREMENT,
             HotkeyName TEXT NOT NULL,

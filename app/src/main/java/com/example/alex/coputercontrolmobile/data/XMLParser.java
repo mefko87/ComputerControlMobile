@@ -2,7 +2,6 @@ package com.example.alex.coputercontrolmobile.data;
 
 
 import android.content.Context;
-import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -17,6 +16,9 @@ public class XMLParser {
 	private boolean mShowLogs = true;
 	private String LOG_TAG = "myLogs";
 	private List<String> mQueryList = new ArrayList<String>();
+	private final String tagToParse = "query";
+	private final String mVersion = "version";
+	private final String mainTag = "db";
 
 	public XMLParser() throws IOException, XmlPullParserException {
 
@@ -36,22 +38,19 @@ public class XMLParser {
 		int eventType = xpp.getEventType();
 		String currentTag = null;
 		String currentUserVersion = null;
-		String tagToParse = "query";
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 			if (eventType == XmlPullParser.START_TAG) {
 				currentTag = xpp.getName();
-
-				if (xpp.getAttributeCount() != 0) {
-					if (xpp.getAttributeName(0).equals("version")) {
-						currentUserVersion = xpp.getAttributeValue(0);
-					}
+				if (xpp.getName().equals(mainTag) && xpp.getAttributeName(0).equals(mVersion)) {
+					currentUserVersion = xpp.getAttributeValue(0);
 				}
+
 			} else if (eventType == XmlPullParser.TEXT) {
 				if (currentTag.equals(tagToParse) && Integer.parseInt(currentUserVersion) >= DBHelper.DATABASE_VERSION) {
 					if (xpp.getText().length() > 8) {
-						if (mShowLogs) {
-							Log.d(LOG_TAG, "Parse from " + currentTag + ": " + xpp.getText());
-						}
+
+						Logger.logD("Parse from " + currentTag + ": " + xpp.getText());
+
 						mQueryList.add(xpp.getText());
 					}
 				}
@@ -68,7 +67,7 @@ public class XMLParser {
 		xpp.setInput(raw, null);
 		int eventType = xpp.getEventType();
 		String currentTag = null;
-		String tagToParse = "query";
+
 
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 			if (eventType == XmlPullParser.START_TAG) {
@@ -76,9 +75,7 @@ public class XMLParser {
 			} else if (eventType == XmlPullParser.TEXT) {
 				if (currentTag.equals(tagToParse)) {
 					if (xpp.getText().length() > 8) {
-						if (mShowLogs) {
-							Log.d(LOG_TAG, "Parse from " + currentTag + ": " + xpp.getText());
-						}
+						Logger.logD("Parse from " + currentTag + ": " + xpp.getText());
 						mQueryList.add(xpp.getText());
 					}
 				}

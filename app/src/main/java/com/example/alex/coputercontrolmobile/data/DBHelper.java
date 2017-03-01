@@ -4,7 +4,6 @@ package com.example.alex.coputercontrolmobile.data;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -41,9 +40,8 @@ public class DBHelper extends SQLiteOpenHelper {
 		for (int i = 0; i < listsize; i++) {
 			if (mParser.getQueryList().get(i).length() > 10) {
 				sqLiteDatabase.execSQL(mParser.getQueryList().get(i));
-				if (mShowLogs) {
-					Log.d(LOG_TAG, "onCreate: " + mParser.getQueryList().size() + mParser.getQueryList().get(i));
-				}
+				Logger.logD("onCreate: " + mParser.getQueryList().size() + mParser.getQueryList().get(i));
+
 			}
 		}
 	}
@@ -65,13 +63,11 @@ public class DBHelper extends SQLiteOpenHelper {
 			for (int c = 0; c < listsize; c++) {
 				if (mParser.getQueryList().get(c).length() > 10) {
 					sqLiteDatabase.execSQL(mParser.getQueryList().get(c));
-					if (mShowLogs) {
-						Log.d(LOG_TAG, "onUpgrade: " + mParser.getQueryList().size() + mParser.getQueryList().get(c));
-					}
+					Logger.logD("onUpgrade: " + mParser.getQueryList().size() + mParser.getQueryList().get(c));
 				}
 			}
 		} else {
-			Log.d(LOG_TAG, "onUpgrade: " + " No query for upgrade");
+			Logger.logD("onUpgrade: " + " No query for upgrade");
 		}
 	}
 
