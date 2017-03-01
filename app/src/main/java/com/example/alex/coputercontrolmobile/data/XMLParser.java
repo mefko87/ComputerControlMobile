@@ -13,12 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class XMLParser {
-	private boolean mShowLogs = true;
-	private String LOG_TAG = "myLogs";
+
 	private List<String> mQueryList = new ArrayList<String>();
-	private final String tagToParse = "query";
-	private final String mVersion = "version";
-	private final String mainTag = "db";
+	private static final String tagToParse = "query";
+	private static final String mVersion = "version";
+	private static final String mainTag = "db";
 
 	public XMLParser() throws IOException, XmlPullParserException {
 

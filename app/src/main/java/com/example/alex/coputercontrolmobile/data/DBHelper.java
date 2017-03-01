@@ -16,8 +16,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	public static final int DATABASE_VERSION = 2;
 	private Context mContext;
 	private XMLParser mParser = new XMLParser();
-	private String LOG_TAG = "myLogs";
-	private boolean mShowLogs = true;
+
 
 	public DBHelper(Context context) throws IOException, XmlPullParserException {
 		super(context, DATABAASE_NAME, null, DATABASE_VERSION);

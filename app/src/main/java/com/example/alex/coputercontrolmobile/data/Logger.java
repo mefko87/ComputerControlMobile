@@ -13,4 +13,29 @@ public class Logger {
 			Log.d(LOG_TAG, message);
 		}
 	}
+
+	public static void logI(String message) {
+		if (SHOW_LOGS) {
+			Log.i(LOG_TAG, message);
+		}
+	}
+
+	public static void logE(String message) {
+		if (SHOW_LOGS) {
+			Log.e(LOG_TAG, message);
+		}
+	}
+
+	public static void logV(String message) {
+		if (SHOW_LOGS) {
+			Log.v(LOG_TAG, message);
+		}
+	}
+
+	public static void logW(String message) {
+		if (SHOW_LOGS) {
+			Log.w(LOG_TAG, message);
+		}
+
+	}
 }
